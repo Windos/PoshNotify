@@ -1,3 +1,4 @@
+# The function that handles macOS notifications
 function Pop-MacOSNotification {
     [CmdletBinding()]
     param (

@@ -1,4 +1,26 @@
-function Send-PoshNotification {
+<#
+.SYNOPSIS
+Short description
+
+.DESCRIPTION
+Long description
+
+.PARAMETER Body
+Parameter description
+
+.PARAMETER Title
+Parameter description
+
+.PARAMETER Icon
+Parameter description
+
+.EXAMPLE
+An example
+
+.NOTES
+General notes
+#>
+function Send-OSNotification {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]

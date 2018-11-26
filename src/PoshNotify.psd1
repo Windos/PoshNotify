@@ -21,19 +21,19 @@ CompatiblePSEditions = @('Desktop', 'Core')
 GUID = '742f6d08-546a-4598-8155-fab499b3c1c0'
 
 # Author of this module
-Author = 'idk'
+Author = 'windos;steviecoaster;tylerleonhardt'
 
 # Company or vendor of this module
-CompanyName = 'idk'
+CompanyName = 'Windos, steviecoaster & tylerleonhardt'
 
 # Copyright statement for this module
-Copyright = '(c) idk. All rights reserved.'
+Copyright = '(c) Windos, steviecoaster & tylerleonhardt. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Cross-platform PowerShell module for generating toast notifications on Linux, macOS, and Windows.'
 
 # Minimum version of the PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -69,7 +69,7 @@ RequiredModules = @('MacNotify')
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Send-PoshNotification'
+FunctionsToExport = 'Send-OSNotification'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = ''

@@ -8,8 +8,32 @@ function Pop-MacOSNotification {
 
         [Parameter(Mandatory=$true)]
         [string]
-        $Title
+        $Title,
+
+        [Parameter()]
+        [string]
+        $Icon
     )
 
-    MacNotify\Invoke-MacNotification -Message $Body -Title $Title
+    # If the command requires advanced features, we should use alerter.
+    # This if contains all the parameters that would need it.
+    if ($Icon) {
+        $splat = @{
+            Message = $Body
+            Title = $Title
+            Timeout = 4
+            Silent = $true
+        }
+
+        if ($Icon) {
+            $splat.Add('AppIcon', $Icon)
+        }
+        MacNotify\Invoke-AlerterNotification @splat
+    } else {
+        $splat = @{
+            Message = $Body
+            Title = $Title
+        }
+        MacNotify\Invoke-MacNotification @splat
+    }
 }

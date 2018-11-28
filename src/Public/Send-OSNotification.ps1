@@ -41,11 +41,7 @@ function Send-OSNotification {
             break
         }
         $IsMacOS {
-            if ($Icon) {
-                Write-Warning 'MacOS does not support the Icon parameter at this time.'
-            }
-
-            Pop-MacOSNotification -Body $Body -Title $Title
+            Pop-MacOSNotification -Body $Body -Title $Title -Icon $Icon
             break
         }
         $IsLinux {

@@ -21,7 +21,7 @@ An example
 General notes
 #>
 function Send-OSNotification {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess=$true)]
     param (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
         [string]

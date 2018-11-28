@@ -36,7 +36,7 @@ function Pop-MacOSNotification {
             Message = $Body
             Title = $Title
         }
-        if($PSCmdlet.ShouldProcess("rrunning: Invoke-MacNotification $(ConvertTo-ParameterString $splat)")) {
+        if($PSCmdlet.ShouldProcess("running: Invoke-MacNotification $(ConvertTo-ParameterString $splat)")) {
             MacNotify\Invoke-MacNotification @splat
         }
     }

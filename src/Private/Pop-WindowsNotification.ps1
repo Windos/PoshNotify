@@ -12,8 +12,18 @@ Function Pop-Notification {
 
         [Parameter()]
         [string]
-        $Icon = "$PSScriptRoot\lib\alarm.png"
+        $Icon = "$PSScriptRoot\lib\alarm.png",
+
+        [Parameter()]
+        [switch]
+        $Silent
     )
+
+    if ($Silent) {
+        $SoundElement = '<audio silent="true" />'
+    } else {
+        $SoundElement = '<audio src="ms-winsoundevent:Notification.Default" />'
+    }
 
     $XmlString = @"
     <toast>
@@ -24,7 +34,7 @@ Function Pop-Notification {
         <image src=$Icon placement="appLogoOverride" hint-crop="circle" />
         </binding>
     </visual>
-    <audio src="ms-winsoundevent:Notification.Default" />
+    $SoundElement
     </toast>
 "@
 

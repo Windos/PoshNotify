@@ -31,7 +31,7 @@ Function Pop-WindowsNotification {
         <binding template="ToastGeneric">
         <text>$Title</text>
         <text>$Body</text>
-        <image src=$Icon placement="appLogoOverride" hint-crop="circle" />
+        <image src="$Icon" placement="appLogoOverride" hint-crop="circle" />
         </binding>
     </visual>
     $SoundElement

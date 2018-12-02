@@ -1,4 +1,4 @@
-Function Pop-Notification {
+Function Pop-WindowsNotification {
 
     [CmdletBinding()]
     param (

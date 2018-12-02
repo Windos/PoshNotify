@@ -1,6 +1,6 @@
 # The function that handles macOS notifications
 function Pop-MacOSNotification {
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess=$true)]
     param (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
         [string]
@@ -28,12 +28,16 @@ function Pop-MacOSNotification {
         if ($Icon) {
             $splat.Add('AppIcon', $Icon)
         }
-        MacNotify\Invoke-AlerterNotification @splat
+        if($PSCmdlet.ShouldProcess("running: Invoke-AlerterNotification $(ConvertTo-ParameterString $splat)")) {
+            MacNotify\Invoke-AlerterNotification @splat
+        }
     } else {
         $splat = @{
             Message = $Body
             Title = $Title
         }
-        MacNotify\Invoke-MacNotification @splat
+        if($PSCmdlet.ShouldProcess("running: Invoke-MacNotification $(ConvertTo-ParameterString $splat)")) {
+            MacNotify\Invoke-MacNotification @splat
+        }
     }
 }

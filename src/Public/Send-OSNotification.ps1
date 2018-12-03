@@ -38,6 +38,8 @@ function Send-OSNotification {
 
     switch ($true) {
         $IsWindows {
+            # Must be PowerShell Core on Windows
+            Pop-WindowsNotification -Body $Body -Title $Title -Icon $Icon
             break
         }
         $IsMacOS {
@@ -50,6 +52,7 @@ function Send-OSNotification {
         }
         Default {
             # Must be Windows PowerShell
+            Pop-WindowsNotification -Body $Body -Title $Title -Icon $Icon
             break
         }
     }

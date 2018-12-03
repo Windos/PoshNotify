@@ -45,6 +45,7 @@ function Send-OSNotification {
             break
         }
         $IsLinux {
+            Pop-LinuxNotification -Body $Body -Title $Title -Icon $Icon
             break
         }
         Default {

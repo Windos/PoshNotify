@@ -1,6 +1,6 @@
 Function Pop-WindowsNotification {
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess=$true)]
     param (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
         [string]
@@ -44,7 +44,9 @@ Function Pop-WindowsNotification {
     $null = [Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom.XmlDocument, ContentType = WindowsRuntime]
     $ToastXml = [Windows.Data.Xml.Dom.XmlDocument]::new()
     $ToastXml.LoadXml($XmlString)
-
     $Toast = [Windows.UI.Notifications.ToastNotification]::new($ToastXml)
-    [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($AppId).Show($Toast)
+
+    if($PSCmdlet.ShouldProcess("running: CreateToastNotifier method with AppId $AppId and XML Payload: `r`n$XmlString")) {
+        [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($AppId).Show($Toast)
+    }
 }

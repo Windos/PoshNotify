@@ -12,7 +12,7 @@ Function Pop-WindowsNotification {
 
         [Parameter()]
         [string]
-        $Icon = "$PSScriptRoot\lib\alarm.png",
+        $Icon = "$PSScriptRoot\..\lib\alarm.png",
 
         [Parameter()]
         [switch]
@@ -31,7 +31,7 @@ Function Pop-WindowsNotification {
         <binding template="ToastGeneric">
         <text>$Title</text>
         <text>$Body</text>
-        <image src="$Icon" placement="appLogoOverride" hint-crop="circle" />
+        <image src="$((Get-ChildItem -Path $Icon).FullName)" placement="appLogoOverride" hint-crop="circle" />
         </binding>
     </visual>
     $SoundElement

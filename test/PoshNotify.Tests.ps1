@@ -1,8 +1,7 @@
+Import-Module "$PSScriptRoot/../src/PoshNotify.psd1" -Force
+
 Describe "Notification WhatIf tests" {
     Context "Send-OSNotification" {
-        BeforeAll {
-            Import-Module ../src/PoshNotify.psd1 -Force
-        }
         It "Should fire a notification" {
             # Since it's non-trivial to detect the notification that gets fired on each platform,
             # we are testing using WhatIf and verifying the operation that would be performed.

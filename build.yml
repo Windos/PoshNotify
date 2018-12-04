@@ -1,0 +1,9 @@
+steps:
+- powershell: ./build.ps1 -Bootstrap -Test
+  displayName: 'Run tests'
+
+- task: PublishTestResults@2
+  inputs:
+    testRunner: NUnit
+    testResultsFiles: '**/TestResults.xml'
+  condition: succeededOrFailed()

@@ -1,20 +1,19 @@
 jobs:
-- job: Windows
-  pool:
-    vmImage: 'vs2017-win2016'
 - job: macOS
   pool:
     vmImage: 'macOS-10.13'
+  steps:
+  - template: build.yml # Template reference
+
 - job: Linux
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'Ubuntu-16.04'
+  steps:
+  - template: build.yml # Template reference
 
-steps:
-- powershell: ./build.ps1 -Bootstrap -Test
-  displayName: 'Run tests'
-
-- task: PublishTestResults@2
-  inputs:
-    testRunner: NUnit
-    testResultsFiles: '**/TestResults.xml'
-  condition: succeededOrFailed()
+- job: Windows
+  pool:
+    vmImage: 'VS2017-Win2016'
+  steps:
+  - template: build.yml # Template reference
+  - script: sign              # Extra step on Windows only

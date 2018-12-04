@@ -23,7 +23,7 @@ Describe "Notification WhatIf tests" {
                     break
                 }
                 $IsLinux {
-                    $expected = "idk"
+                    $expected = 'What if: Performing the operation "Pop-LinuxNotification" on target "running: PSNotifySend\Send-PSNotification -Body ''Hello World'' -Summary ''PowerShell Notification''".'
                     break
                 }
                 $IsMacOS {

@@ -16,4 +16,3 @@ jobs:
     vmImage: 'VS2017-Win2016'
   steps:
   - template: build.yml # Template reference
-  - script: sign              # Extra step on Windows only

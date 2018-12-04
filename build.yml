@@ -2,6 +2,7 @@ steps:
 - task: PowerShell@2
   displayName: 'Run tests'
   inputs:
+    targetType: Inline
     script: ./build.ps1 -Bootstrap -Test
     pwsh: true
 

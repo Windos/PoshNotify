@@ -1,7 +1,9 @@
 steps:
-- powershell: ./build.ps1 -Bootstrap -Test
+- task: PowerShell@2
   displayName: 'Run tests'
-  pwsh: true
+  inputs:
+    script: ./build.ps1 -Bootstrap -Test
+    pwsh: true
 
 - task: PublishTestResults@2
   inputs:

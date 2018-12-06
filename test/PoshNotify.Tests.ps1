@@ -44,7 +44,7 @@ Describe "Notification WhatIf tests" {
                     break
                 }
                 $IsMacOS {
-                    $expected = 'What if: Performing the operation "Pop-MacOSNotification" on target "running: Invoke-MacNotification -Title ''PowerShell Notification'' -Message ''Hello World''".'
+                    $expected = 'What if: Performing the operation "Pop-MacOSNotification" on target "running: Invoke-MacNotification -Message ''Hello World'' -Title ''PowerShell Notification''".'
                     break
                 }
                 default {

@@ -77,7 +77,7 @@ Describe "Notification WhatIf tests" {
                 }
             }
 
-            $log -join "`n" | Should Be $expected
+            $log -join [System.Environment]::NewLine | Should Be $expected
         }
     }
 }

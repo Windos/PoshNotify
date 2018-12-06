@@ -1,7 +1,7 @@
 Import-Module "$PSScriptRoot/../src/PoshNotify.psd1" -Force
 if ($PSEdition -eq 'Desktop'){
     $appId = (Get-StartApps -Name 'PowerShell').where({$_.Name -eq 'Windows PowerShell'}).AppId
-} elseif ($PSVersionTable.PSVersion -ge [Version]'6.1') {
+} elseif ($IsWindows -and $PSVersionTable.PSVersion -ge [Version]'6.1') {
     Import-Module StartLayout -SkipEditionCheck
     $appId = (Get-StartApps -Name 'PowerShell').where({$_.Name -like 'PowerShell 6*'})[0].AppId
 } else {

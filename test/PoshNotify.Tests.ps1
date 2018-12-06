@@ -21,12 +21,25 @@ Describe "Notification WhatIf tests" {
                 Stop-Transcript
             }
 
-            $log = Get-Content tmp.log | Where-Object { $_ -match "What if: Performing the operation" }
+            if ($IsMacOS -and $IsLinux) {
+                $log = Get-Content tmp.log | Where-Object { $_ -match "What if: Performing the operation" }
+            } else {
+                $content = Get-Content tmp.log
+                $i = 0
+                while ($content[$i] -notmatch "What if: Performing the operation") {
+                    $i++
+                }
+                $log = [System.Collections.ArrayList]@()
+                while ($content[$i] -ne "**********************") {
+                    $null = $log.Add($content[$i])
+                    $i++
+                }
+            }
             Remove-Item tmp.log
 
             switch ($true) {
                 $IsWindows {
-                    $expected = 'What if: Performing the operation "Pop-WindowsNotification" on target "running: CreateToastNotifier method with AppId ' + $appId + ' and XML Payload:
+                    $expected = 'What if: Performing the operation "Pop-WindowsNotification" on target "running: CreateToastNotifier method with AppId ' + $appId + ' and XML Payload: ' + '
     <toast>
     <visual>
         <binding template="ToastGeneric">
@@ -54,7 +67,7 @@ Describe "Notification WhatIf tests" {
                 }
             }
 
-            $log | Should -Be $expected
+            $log -join "`n" | Should Be $expected
         }
     }
 }

@@ -62,7 +62,17 @@ Describe "Notification WhatIf tests" {
                 }
                 default {
                     #Windows PowerShell
-                    $expected = "idk"
+                    $expected = 'What if: Performing the operation "Pop-WindowsNotification" on target "running: CreateToastNotifier method with AppId ' + $appId + ' and XML Payload: ' + '
+    <toast>
+    <visual>
+        <binding template="ToastGeneric">
+        <text>PowerShell Notification</text>
+        <text>Hello World</text>
+        <image src="" placement="appLogoOverride" hint-crop="circle" />
+        </binding>
+    </visual>
+    <audio src="ms-winsoundevent:Notification.Default" />
+    </toast>".'
                     break
                 }
             }

@@ -5,7 +5,7 @@ Displays toast notifications on Linux, macOS, and Windows.
 .DESCRIPTION
 The Send-OSNotification function displays notification on Linux, macOS, and Windows.
 
-Each operating system uses different methods for generating and displaying notifications, but this function abstracts 
+Each operating system uses different methods for generating and displaying notifications, but this function abstracts
 each of them for a consistent experience regardless of the environment in which it is used.
 
 .PARAMETER Body
@@ -27,6 +27,9 @@ Send-OSNotification -Title 'Script Completed' -Body "The script you were running
 This command generates a notification that includes the time at which it was generated in the body.
 
 .NOTES
+Notifications are "best effort". Certain features may not be supported on all platforms but PoshNotify will still
+attempt to send a notification with as much of the information provided as it can.
+
 This function relies on the MacNotify module on macOS, and the PSNotifySend module on Linux.
 #>
 function Send-OSNotification {

@@ -8,7 +8,7 @@ function ConvertTo-ParameterString {
         $InputObject
     )
     $paramsArray = @()
-    foreach ($dictionaryEntry in $InputObject.GetEnumerator()) {
+    foreach ($dictionaryEntry in ($InputObject.GetEnumerator() | Sort-Object Key)) {
         $paramsArray += "-$($dictionaryEntry.Key)"
 
         if ($dictionaryEntry.Value.GetType() -eq [string]) {

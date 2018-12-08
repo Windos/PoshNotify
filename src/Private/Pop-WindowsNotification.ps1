@@ -12,7 +12,7 @@ Function Pop-WindowsNotification {
 
         [Parameter()]
         [string]
-        $Icon = "$PSScriptRoot\..\lib\alarm.png",
+        $Icon = "$PSScriptRoot\..\lib\PoshNotify.png",
 
         [Parameter()]
         [switch]

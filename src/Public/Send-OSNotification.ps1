@@ -38,7 +38,7 @@ function Send-OSNotification {
 
     $splat = @{
         Body = $Body
-        Summary = $Title
+        Title = $Title
     }
 
     if ($Icon) {

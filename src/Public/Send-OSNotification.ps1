@@ -36,23 +36,32 @@ function Send-OSNotification {
         $Icon
     )
 
+    $splat = @{
+        Body = $Body
+        Title = $Title
+    }
+
+    if ($Icon) {
+        $splat.Add('Icon', $Icon)
+    }
+
     switch ($true) {
         $IsWindows {
             # Must be PowerShell Core on Windows
-            Pop-WindowsNotification -Body $Body -Title $Title -Icon $Icon
+            Pop-WindowsNotification @splat
             break
         }
         $IsMacOS {
-            Pop-MacOSNotification -Body $Body -Title $Title -Icon $Icon
+            Pop-MacOSNotification @splat
             break
         }
         $IsLinux {
-            Pop-LinuxNotification -Body $Body -Title $Title -Icon $Icon
+            Pop-LinuxNotification @splat
             break
         }
         Default {
             # Must be Windows PowerShell
-            Pop-WindowsNotification -Body $Body -Title $Title -Icon $Icon
+            Pop-WindowsNotification @splat
             break
         }
     }

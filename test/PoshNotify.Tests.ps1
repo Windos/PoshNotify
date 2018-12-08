@@ -8,7 +8,7 @@ if ($PSEdition -eq 'Desktop'){
     $appId = '{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\WindowsPowerShell\v1.0\powershell.exe'
 }
 
-$imgPath = (Resolve-Path -Path "$PSScriptRoot\..\lib\alarm.png").Path
+$imgPath = (Resolve-Path -Path "$PSScriptRoot/../src/lib/alarm.png").Path
 
 Describe "Notification WhatIf tests" {
     Context "Send-OSNotification" {

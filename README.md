@@ -13,6 +13,10 @@ Cross-platform PowerShell module for generating toast notifications on Linux, ma
 Send-OSNotification -Title 'Script Completed' -Body "The script you were running finished at $(Get-Date -Format t)"
 ```
 
-**Windows**
+#### Windows
 
 ![Windows result script completion](/media/Win-Report.png)
+
+#### macOS
+
+![macOS result script completion](/media/Mac-Report.png)

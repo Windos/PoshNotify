@@ -20,3 +20,7 @@ Send-OSNotification -Title 'Script Completed' -Body "The script you were running
 #### macOS
 
 ![macOS result script completion](/media/Mac-Report.png)
+
+#### Linux
+
+![Linux result script completion](/media/Linux-Report.png)

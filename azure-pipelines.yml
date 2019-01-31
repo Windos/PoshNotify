@@ -1,7 +1,7 @@
 # Thanks to Stephan Stranger
 # https://stefanstranger.github.io/2018/12/30/UseAzurePipelinesToPublishPowerShellModule/
 
-name: $(Build.DefinitionName)_$(Date:yyyyMMdd))
+name: $(Build.DefinitionName)_$(Date:yyyyMMdd)
 pr:
 - master
 

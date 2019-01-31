@@ -33,7 +33,7 @@ attempt to send a notification with as much of the information provided as it ca
 This function relies on the MacNotify module on macOS, and the PSNotifySend module on Linux.
 #>
 function Send-OSNotification {
-    [CmdletBinding(SupportsShouldProcess=$true)]
+    [CmdletBinding(SupportsShouldProcess=$true,HelpUri="https://github.com/Windos/PoshNotify/tree/master/docs/Send-OSNotification.md")]
     param (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
         [string]

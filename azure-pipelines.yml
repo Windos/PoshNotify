@@ -30,6 +30,8 @@ jobs:
   steps:
   - task: PowerShell@2
     displayName: 'Run publish task'
+    env:
+      psgallery: $(NugetAPIKey)
     inputs:
       targetType: Inline
       script: ./build.ps1 -Publish

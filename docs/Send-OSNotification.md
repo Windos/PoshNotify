@@ -68,7 +68,7 @@ Parameter Sets:
 Aliases:
 Accepted values:
 
-Required: True
+Required:
 Position: Named
 Default value:
 Accept pipeline input: False
@@ -85,7 +85,7 @@ Parameter Sets:
 Aliases:
 Accepted values:
 
-Required: True
+Required:
 Position: Named
 Default value:
 Accept pipeline input: False

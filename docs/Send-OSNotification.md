@@ -106,3 +106,5 @@ attempt to send a notification with as much of the information provided as it ca
 This function relies on the MacNotify module on macOS, and the PSNotifySend module on Linux.
 
 ## RELATED LINKS
+
+https://github.com/Windos/PoshNotify/tree/master/docs/Send-OSNotification.md

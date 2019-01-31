@@ -26,6 +26,9 @@ Send-OSNotification -Title 'Script Completed' -Body "The script you were running
 
 This command generates a notification that includes the time at which it was generated in the body.
 
+.LINK
+https://github.com/Windos/PoshNotify/tree/master/docs/Send-OSNotification.md
+
 .NOTES
 Notifications are "best effort". Certain features may not be supported on all platforms but PoshNotify will still
 attempt to send a notification with as much of the information provided as it can.

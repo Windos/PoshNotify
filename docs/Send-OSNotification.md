@@ -89,7 +89,7 @@ Required:
 Position: Named
 Default value:
 Accept pipeline input: False
-Accept
+Accept wildcard characters: False
 ```
 
 ## INPUTS

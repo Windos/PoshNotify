@@ -62,7 +62,7 @@ if($Publish.IsPresent) {
     # Copy Module README file
     Copy-Item -Path '.\README.md' -Destination .\output\PoshNotify -Force
 
-    Publish Module to PowerShell Gallery
+    # Publish Module to PowerShell Gallery
     Try {
         # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
         $params = @{

@@ -1,9 +1,5 @@
-# Thanks to Stephan Stranger
+# Thanks to Stefan Stranger
 # https://stefanstranger.github.io/2018/12/30/UseAzurePipelinesToPublishPowerShellModule/
-
-name: $(Build.DefinitionName)_$(Date:yyyyMMdd)
-pr:
-- master
 
 jobs:
 - job: macOS
@@ -29,6 +25,7 @@ jobs:
     vmImage: 'VS2017-Win2016'
   steps:
   - task: PowerShell@2
+    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
     displayName: 'Run publish task'
     env:
       psgallery: $(NugetAPIKey)

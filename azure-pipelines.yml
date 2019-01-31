@@ -1,18 +1,35 @@
+# Thanks to Stephan Stranger
+# https://stefanstranger.github.io/2018/12/30/UseAzurePipelinesToPublishPowerShellModule/
+
+name: $(Build.DefinitionName)_$(Date:yyyyMMdd))
+pr:
+- master
+
 jobs:
 - job: macOS
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - template: build.yml # Template reference
+  - template: azure-template.yml # Template reference
 
 - job: Linux
   pool:
     vmImage: 'Ubuntu-16.04'
   steps:
-  - template: build.yml # Template reference
+  - template: azure-template.yml # Template reference
 
 - job: Windows
   pool:
     vmImage: 'VS2017-Win2016'
   steps:
-  - template: build.yml # Template reference
+  - template: azure-template.yml # Template reference
+
+- job: Publish
+  pool:
+    vmImage: 'VS2017-Win2016'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Run publish task'
+    inputs:
+      targetType: Inline
+      script: ./build.ps1 -Publish

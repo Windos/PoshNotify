@@ -4,7 +4,10 @@ param(
     $Bootstrap,
 
     [switch]
-    $Test
+    $Test,
+
+    [switch]
+    $Publish
 )
 
 # Bootstrap step
@@ -39,5 +42,38 @@ if($Test.IsPresent) {
         if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed." }
     } else {
         Invoke-Pester "$PSScriptRoot/test"
+    }
+}
+
+if($Publish.IsPresent) {
+    if ((Test-Path .\output)) {
+        Remove-Item -Path .\Output -Recurse -Force
+    }
+
+    # Copy Module Files to Output Folder
+    if (-not (Test-Path .\output\PoshNotify)) {
+
+        $null = New-Item -Path .\output\PoshNotify -ItemType Directory
+
+    }
+
+    Copy-Item -Path '.\src\*' -Filter *.* -Recurse -Destination .\output\PoshNotify -Force
+
+    # Copy Module README file
+    Copy-Item -Path '.\README.md' -Destination .\output\PoshNotify -Force
+
+    Publish Module to PowerShell Gallery
+    Try {
+        # Build a splat containing the required details and make sure to Stop for errors which will trigger the catch
+        $params = @{
+            Path        = ('{0}\Output\PoshNotify' -f $PSScriptRoot )
+            NuGetApiKey = $env:psgallery
+            ErrorAction = 'Stop'
+        }
+        Publish-Module @params
+        Write-Output -InputObject ('PoshNotify PowerShell Module version published to the PowerShell Gallery')
+    }
+    Catch {
+        throw $_
     }
 }

@@ -1,6 +1,6 @@
 steps:
 - task: PowerShell@2
-  displayName: 'Run tests'
+  displayName: 'Run tests & coverage'
   inputs:
     targetType: Inline
     script: ./build.ps1 -Bootstrap -Test

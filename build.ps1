@@ -41,7 +41,11 @@ if($Test.IsPresent) {
         $res = Invoke-Pester "$PSScriptRoot/test" -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
         if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed." }
     } else {
-        Invoke-Pester "$PSScriptRoot/test"
+        $PSFiles = (Get-ChildItem $PSScriptRoot/src -Recurse -Include "*.psm1","*.ps1").FullName
+
+        $Coverage = Invoke-Pester -Path "$PSScriptRoot/test" -CodeCoverage $PSFiles -PassThru
+        [math]::floor(100 - (($Coverage.CodeCoverage.NumberOfCommandsMissed / $Coverage.CodeCoverage.NumberOfCommandsAnalyzed) * 100))
+
     }
 }
 

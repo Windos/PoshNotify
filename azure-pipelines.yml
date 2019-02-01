@@ -19,16 +19,6 @@ jobs:
     vmImage: 'VS2017-Win2016'
   steps:
   - template: azure-template.yml # Template reference
-  
-- job: Coverage
-  steps:
-    - task: PublishCodeCoverageResults@1
-      inputs:
-        codeCoverageTool: 'JaCoCo'
-        summaryFileLocation: ./report/coverage.xml
-        #reportDirectory: # Optional
-        #additionalCodeCoverageFiles: # Optional
-        #failIfCoverageEmpty: false # Optional
 
 - job: Publish
   condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))

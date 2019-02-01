@@ -1,7 +1,7 @@
 # Thanks to Stefan Stranger
 # https://stefanstranger.github.io/2018/12/30/UseAzurePipelinesToPublishPowerShellModule/
 
-pr:
+trigger:
   branches:
     include:
     - master
@@ -23,7 +23,7 @@ jobs:
   - template: azure-template.yml # Template reference
 
 - job: Linux
-  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
   pool:
     vmImage: 'Ubuntu-16.04'
   steps:
@@ -31,7 +31,7 @@ jobs:
 
 - job: Linux_Coverage
   displayName: 'Linux (/w Coverage)'
-  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
   pool:
     vmImage: 'Ubuntu-16.04'
   steps:
@@ -57,7 +57,7 @@ jobs:
       #failOnStderr: false # Optional
 
 - job: Publish
-  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
   pool:
     vmImage: 'VS2017-Win2016'
   steps:

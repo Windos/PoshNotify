@@ -27,7 +27,7 @@ jobs:
   - task: Bash@3
     inputs:
       targetType: 'filePath' # Optional. Options: filePath, inline
-      filePath: ./codecov.sd
+      filePath: ./codecov.sh
       arguments: -f coverage.json
       #script: '# Write your commands here# Use the environment variables input below to pass secret variables to this script' # Required when targetType == Inline
       #workingDirectory: # Optional

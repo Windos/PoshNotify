@@ -1,9 +1,6 @@
 # Thanks to Stefan Stranger
 # https://stefanstranger.github.io/2018/12/30/UseAzurePipelinesToPublishPowerShellModule/
 
-trigger:
-  batch: true
-
 pr:
   branches:
     include:

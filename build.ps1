@@ -37,16 +37,16 @@ if($Test.IsPresent) {
         throw "Cannot find the 'Pester' module. Please specify '-Bootstrap' to install build dependencies."
     }
 
+    $PSFiles = (Get-ChildItem $PSScriptRoot/src -Recurse -Include "*.psm1","*.ps1").FullName
+
     if ($env:TF_BUILD) {
-        $res = Invoke-Pester "$PSScriptRoot/test" -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
+        $res = Invoke-Pester "$PSScriptRoot/test" -CodeCoverage $PSFiles -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
         if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed." }
     } else {
-        $PSFiles = (Get-ChildItem $PSScriptRoot/src -Recurse -Include "*.psm1","*.ps1").FullName
-
-        $Coverage = Invoke-Pester -Path "$PSScriptRoot/test" -CodeCoverage $PSFiles -PassThru
-        [math]::floor(100 - (($Coverage.CodeCoverage.NumberOfCommandsMissed / $Coverage.CodeCoverage.NumberOfCommandsAnalyzed) * 100))
-
+        $res = Invoke-Pester -Path "$PSScriptRoot/test" -CodeCoverage $PSFiles -PassThru
     }
+
+    [math]::floor(100 - (($res.CodeCoverage.NumberOfCommandsMissed / $res.CodeCoverage.NumberOfCommandsAnalyzed) * 100))
 }
 
 if($Publish.IsPresent) {

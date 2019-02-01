@@ -40,13 +40,11 @@ if($Test.IsPresent) {
     $PSFiles = (Get-ChildItem $PSScriptRoot/src -Recurse -Include "*.psm1","*.ps1").FullName
 
     if ($env:TF_BUILD) {
-        $res = Invoke-Pester "$PSScriptRoot/test" -CodeCoverage $PSFiles -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
+        $res = Invoke-Pester "$PSScriptRoot/test" -CodeCoverage $PSFiles -CodeCoverageOutputFile coverage.xml -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
         if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed." }
     } else {
-        $res = Invoke-Pester -Path "$PSScriptRoot/test" -CodeCoverage $PSFiles -PassThru
+        Invoke-Pester -Path "$PSScriptRoot/test" -CodeCoverage $PSFiles -CodeCoverageOutputFile coverage.xml
     }
-
-    [math]::floor(100 - (($res.CodeCoverage.NumberOfCommandsMissed / $res.CodeCoverage.NumberOfCommandsAnalyzed) * 100))
 }
 
 if($Publish.IsPresent) {

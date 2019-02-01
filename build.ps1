@@ -7,7 +7,11 @@ param(
     $Test,
 
     [switch]
-    $Publish
+    $Publish,
+
+    # Only works in conjunction with $Test (#TODO)
+    [switch]
+    $Coverage
 )
 
 # Bootstrap step
@@ -29,6 +33,12 @@ if ($Bootstrap.IsPresent) {
         Write-Warning "Module 'Pester' is missing. Installing 'Pester' ..."
         Install-Module -Name Pester -Scope CurrentUser -Force
     }
+
+    # For coverage
+    if (-not (Get-Module -Name PSCodeCovIo -ListAvailable) -and $Coverage.IsPresent) {
+        Write-Warning "Module 'PSCodeCovIo' is missing. Installing 'PSCodeCovIo' ..."
+        Install-Module -Name PSCodeCovIo -Scope CurrentUser -Force
+    }
 }
 
 # Test step
@@ -37,11 +47,54 @@ if($Test.IsPresent) {
         throw "Cannot find the 'Pester' module. Please specify '-Bootstrap' to install build dependencies."
     }
 
+    if (-not (Get-Module -Name PSCodeCovIo -ListAvailable) -and $Coverage.IsPresent) {
+        throw "Cannot find the 'PSCodeCovIo' module. Please specify '-Bootstrap' to install build dependencies."
+    }
+
+    if($Coverage.IsPresent) {
+        switch ($true) {
+            $IsWindows {
+                # Must be PowerShell Core on Windows
+                $Exclude = @("*Linux*", "*MacOS*")
+                break
+            }
+            $IsMacOS {
+                $Exclude = @("*Linux*", "*Windows*")
+                break
+            }
+            $IsLinux {
+                $Exclude = @("*Windows*", "*MacOS*")
+                break
+            }
+            Default {
+                # Must be Windows PowerShell
+                $Exclude = @("*Linux*", "*MacOS*")
+                break
+            }
+        }
+
+        $RelevantFiles = (Get-ChildItem $PSScriptRoot/src -Recurse -Include "*.psm1","*.ps1" -Exclude $Exclude).FullName
+    }
+
     if ($env:TF_BUILD) {
-        $res = Invoke-Pester "$PSScriptRoot/test" -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
+        if ($Coverage.IsPresent){
+            $res = Invoke-Pester "$PSScriptRoot/test" -CodeCoverage $RelevantFiles -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
+        } else {
+            $res = Invoke-Pester "$PSScriptRoot/test" -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
+        }
         if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed." }
     } else {
-        Invoke-Pester "$PSScriptRoot/test"
+        if ($Coverage.IsPresent) {
+            $res = Invoke-Pester -Path "$PSScriptRoot/test" -CodeCoverage $RelevantFiles -PassThru
+        } else {
+            $res = Invoke-Pester -Path "$PSScriptRoot/test" -PassThru
+        }
+    }
+
+    if ($Coverage.IsPresent) {
+        Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $PSScriptRoot -Path coverage.json
+
+        Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
     }
 }
 

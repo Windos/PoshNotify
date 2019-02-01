@@ -29,31 +29,32 @@ jobs:
   steps:
   - template: azure-template.yml # Template reference
 
-- job: Linux (/w Coverage)
-  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
-  pool:
-    vmImage: 'Ubuntu-16.04'
-  steps:
-  - task: PowerShell@2
-    displayName: 'Run tests & coverage'
-    inputs:
-      targetType: Inline
-      script: ./build.ps1 -Bootstrap -Test -Coverage
+- job: Linux_Coverage
+    displayName: 'Linux (/w Coverage)'
+    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    steps:
+    - task: PowerShell@2
+      displayName: 'Run tests & coverage'
+      inputs:
+        targetType: Inline
+        script: ./build.ps1 -Bootstrap -Test -Coverage
 
-  - task: PublishTestResults@2
-    inputs:
-      testRunner: NUnit
-      testResultsFiles: '**/TestResults.xml'
-      condition: succeededOrFailed()
+    - task: PublishTestResults@2
+      inputs:
+        testRunner: NUnit
+        testResultsFiles: '**/TestResults.xml'
+        condition: succeededOrFailed()
 
-  - task: Bash@3
-    inputs:
-      targetType: 'filePath' # Optional. Options: filePath, inline
-      filePath: ./codecov.sh
-      arguments: -f coverage.json -t $(CODECOV_TOKEN)
-      #script: '# Write your commands here# Use the environment variables input below to pass secret variables to this script' # Required when targetType == Inline
-      #workingDirectory: # Optional
-      #failOnStderr: false # Optional
+    - task: Bash@3
+      inputs:
+        targetType: 'filePath' # Optional. Options: filePath, inline
+        filePath: ./codecov.sh
+        arguments: -f coverage.json -t $(CODECOV_TOKEN)
+        #script: '# Write your commands here# Use the environment variables input below to pass secret variables to this script' # Required when targetType == Inline
+        #workingDirectory: # Optional
+        #failOnStderr: false # Optional
 
 - job: Publish
   condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))

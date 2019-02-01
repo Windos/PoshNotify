@@ -3,8 +3,14 @@
 # PoshNotify
 Cross-platform PowerShell module for generating toast notifications on Linux, macOS, and Windows.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/df16709e5785414fad6a2f21dce1242d)](https://www.codacy.com/app/Windos/PoshNotify?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Windos/PoshNotify&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/Windos/PoshNotify/branch/master/graph/badge.svg)](https://codecov.io/gh/Windos/PoshNotify)
 [![Build Status](https://dev.azure.com/windosnz/PoshNotify/_apis/build/status/Windos.PoshNotify)](https://dev.azure.com/windosnz/PoshNotify/_build/latest?definitionId=1)
 ![Platforms](https://img.shields.io/powershellgallery/p/PoshNotify.svg)
+![Top Language](https://img.shields.io/github/languages/top/Windos/PoshNotify.svg)
+![Code Size](https://img.shields.io/github/languages/code-size/Windos/PoshNotify.svg)
+![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/PoshNotify.svg)
+![Open Issues](https://img.shields.io/github/issues-raw/Windos/PoshNotify.svg)
 
 ## Examples
 

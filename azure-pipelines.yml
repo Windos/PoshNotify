@@ -23,14 +23,15 @@ jobs:
       testRunner: NUnit
       testResultsFiles: '**/TestResults.xml'
       condition: succeededOrFailed()
-      
-  - task: PublishCodeCoverageResults@1
+
+  - task: Bash@3
     inputs:
-      codeCoverageTool: 'JaCoCo'
-      summaryFileLocation: '**/coverage.xml'
-      #reportDirectory: # Optional
-      #additionalCodeCoverageFiles: # Optional
-      #failIfCoverageEmpty: false # Optional
+      targetType: 'filePath' # Optional. Options: filePath, inline
+      filePath: ./codecov.sd
+      arguments: -f coverage.json
+      #script: '# Write your commands here# Use the environment variables input below to pass secret variables to this script' # Required when targetType == Inline
+      #workingDirectory: # Optional
+      #failOnStderr: false # Optional
 
 - job: Windows
   pool:

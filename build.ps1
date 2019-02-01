@@ -9,6 +9,7 @@ param(
     [switch]
     $Publish,
 
+    # Only works in conjunction with $Test (#TODO)
     [switch]
     $Coverage
 )
@@ -32,12 +33,22 @@ if ($Bootstrap.IsPresent) {
         Write-Warning "Module 'Pester' is missing. Installing 'Pester' ..."
         Install-Module -Name Pester -Scope CurrentUser -Force
     }
+
+    # For coverage
+    if (-not (Get-Module -Name PSCodeCovIo -ListAvailable) -and $Coverage.IsPresent) {
+        Write-Warning "Module 'PSCodeCovIo' is missing. Installing 'PSCodeCovIo' ..."
+        Install-Module -Name PSCodeCovIo -Scope CurrentUser -Force
+    }
 }
 
 # Test step
 if($Test.IsPresent) {
     if (-not (Get-Module -Name Pester -ListAvailable)) {
         throw "Cannot find the 'Pester' module. Please specify '-Bootstrap' to install build dependencies."
+    }
+
+    if (-not (Get-Module -Name PSCodeCovIo -ListAvailable) -and $Coverage.IsPresent) {
+        throw "Cannot find the 'PSCodeCovIo' module. Please specify '-Bootstrap' to install build dependencies."
     }
 
     if($Coverage.IsPresent) {
@@ -67,17 +78,23 @@ if($Test.IsPresent) {
 
     if ($env:TF_BUILD) {
         if ($Coverage.IsPresent){
-            $res = Invoke-Pester "$PSScriptRoot/test" -CodeCoverage $RelevantFiles -CodeCoverageOutputFile coverage.xml -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
+            $res = Invoke-Pester "$PSScriptRoot/test" -CodeCoverage $RelevantFiles -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
         } else {
             $res = Invoke-Pester "$PSScriptRoot/test" -OutputFormat NUnitXml -OutputFile TestResults.xml -PassThru
         }
         if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed." }
     } else {
         if ($Coverage.IsPresent) {
-            Invoke-Pester -Path "$PSScriptRoot/test" -CodeCoverage $RelevantFiles -CodeCoverageOutputFile coverage.xml
+            $res = Invoke-Pester -Path "$PSScriptRoot/test" -CodeCoverage $RelevantFiles -PassThru
         } else {
-            Invoke-Pester -Path "$PSScriptRoot/test"
+            $res = Invoke-Pester -Path "$PSScriptRoot/test" -PassThru
         }
+    }
+
+    if ($Coverage.IsPresent) {
+        Export-CodeCovIoJson -CodeCoverage $res.CodeCoverage -RepoRoot $PSScriptRoot -Path coverage.json
+
+        Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
     }
 }
 

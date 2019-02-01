@@ -1,6 +1,18 @@
 # Thanks to Stefan Stranger
 # https://stefanstranger.github.io/2018/12/30/UseAzurePipelinesToPublishPowerShellModule/
 
+trigger:
+  batch: true
+
+pr:
+  batch: true
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - /src/PoshNotify.psd1
+
 jobs:
 - job: macOS
   pool:
@@ -8,7 +20,21 @@ jobs:
   steps:
   - template: azure-template.yml # Template reference
 
+- job: Windows
+  pool:
+    vmImage: 'VS2017-Win2016'
+  steps:
+  - template: azure-template.yml # Template reference
+
 - job: Linux
+  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  steps:
+  - template: azure-template.yml # Template reference
+
+- job: Linux (/w Coverage)
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
   pool:
     vmImage: 'Ubuntu-16.04'
   steps:
@@ -33,14 +59,8 @@ jobs:
       #workingDirectory: # Optional
       #failOnStderr: false # Optional
 
-- job: Windows
-  pool:
-    vmImage: 'VS2017-Win2016'
-  steps:
-  - template: azure-template.yml # Template reference
-
 - job: Publish
-  condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
   pool:
     vmImage: 'VS2017-Win2016'
   steps:

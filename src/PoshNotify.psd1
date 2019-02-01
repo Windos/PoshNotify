@@ -12,7 +12,7 @@
 RootModule = './PoshNotify.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1.1'
+ModuleVersion = '0.1.2'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Desktop', 'Core')
@@ -95,12 +95,13 @@ PrivateData = @{
         ProjectUri = 'https://github.com/Windos/PoshNotify'
 
         # A URL to an icon representing this module.
-        # IconUri = ''
+        IconUri = 'https://raw.githubusercontent.com/Windos/PoshNotify/master/media/PoshNotify.png'
 
         # ReleaseNotes of this module
-        ReleaseNotes = '# 0.1.0
+        ReleaseNotes = '# 0.1.2
 
-Initial release
+* Added icon to metadata (for the Gallery)
+* Included link to online version of help
 '
 
     }

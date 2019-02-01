@@ -98,6 +98,7 @@ if($Test.IsPresent) {
     }
 }
 
+#Publish step
 if($Publish.IsPresent) {
     if ((Test-Path .\output)) {
         Remove-Item -Path .\Output -Recurse -Force

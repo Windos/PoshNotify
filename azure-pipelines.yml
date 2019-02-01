@@ -12,7 +12,25 @@ jobs:
   pool:
     vmImage: 'Ubuntu-16.04'
   steps:
-  - template: azure-template.yml # Template reference
+  - task: PowerShell@2
+    displayName: 'Run tests & coverage'
+    inputs:
+      targetType: Inline
+      script: ./build.ps1 -Bootstrap -Test -Coverage
+
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: NUnit
+      testResultsFiles: '**/TestResults.xml'
+      condition: succeededOrFailed()
+      
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'JaCoCo'
+      summaryFileLocation: '**/coverage.xml'
+      #reportDirectory: # Optional
+      #additionalCodeCoverageFiles: # Optional
+      #failIfCoverageEmpty: false # Optional
 
 - job: Windows
   pool:

@@ -1,6 +1,6 @@
 steps:
 - task: PowerShell@2
-  displayName: 'Run tests & coverage'
+  displayName: 'Run tests'
   inputs:
     targetType: Inline
     script: ./build.ps1 -Bootstrap -Test
@@ -10,12 +10,3 @@ steps:
     testRunner: NUnit
     testResultsFiles: '**/TestResults.xml'
   condition: succeededOrFailed()
-
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: '**/coverage.xml'
-    #reportDirectory: # Optional
-    #additionalCodeCoverageFiles: # Optional
-    #failIfCoverageEmpty: false # Optional
-    

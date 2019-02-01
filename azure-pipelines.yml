@@ -28,7 +28,7 @@ jobs:
     inputs:
       targetType: 'filePath' # Optional. Options: filePath, inline
       filePath: ./codecov.sh
-      arguments: -f coverage.json
+      arguments: -f coverage.json -t $(CODECOV_TOKEN)
       #script: '# Write your commands here# Use the environment variables input below to pass secret variables to this script' # Required when targetType == Inline
       #workingDirectory: # Optional
       #failOnStderr: false # Optional

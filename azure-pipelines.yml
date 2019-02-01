@@ -21,13 +21,14 @@ jobs:
   - template: azure-template.yml # Template reference
   
 - job: Coverage
-  - task: PublishCodeCoverageResults@1
-    inputs:
-      codeCoverageTool: 'JaCoCo'
-      summaryFileLocation: ./report/coverage.xml
-      #reportDirectory: # Optional
-      #additionalCodeCoverageFiles: # Optional
-      #failIfCoverageEmpty: false # Optional
+  steps:
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: 'JaCoCo'
+        summaryFileLocation: ./report/coverage.xml
+        #reportDirectory: # Optional
+        #additionalCodeCoverageFiles: # Optional
+        #failIfCoverageEmpty: false # Optional
 
 - job: Publish
   condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))

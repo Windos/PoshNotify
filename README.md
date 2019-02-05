@@ -11,7 +11,7 @@
 [![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/PoshNotify.svg)](https://www.powershellgallery.com/packages/PoshNotify)
 ![Open Issues](https://img.shields.io/github/issues-raw/Windos/PoshNotify.svg)
 
-Cross-platform PowerShell module for generating toast notifications on Linux, macOS, and Windows.
+Cross-platform PowerShell module for generating toast notifications on Linux, macOS, and Windows 10.
 
 ![PoshNotify Icon](/media/PoshNotify.png)
 

@@ -21,6 +21,9 @@ If specified, the specified picture is included on the notification.
 
 There is a default Icon included on Windows only.
 
+.PARAMETER Sound
+If specified, the specified sound will be played along with the notification.
+
 .EXAMPLE
 Send-OSNotification -Title 'Script Completed' -Body "The script you were running finished at $(Get-Date -Format t)"
 
@@ -48,7 +51,11 @@ function Send-OSNotification {
 
         [Parameter()]
         [string]
-        $Icon
+        $Icon,
+
+        [Parameter()]
+        [string]
+        $Sound
     )
 
     $splat = @{
@@ -58,6 +65,10 @@ function Send-OSNotification {
 
     if ($Icon) {
         $splat.Add('Icon', $Icon)
+    }
+
+    if ($Sound) {
+        $splat.Add('Sound', $Sound)
     }
 
     switch ($true) {

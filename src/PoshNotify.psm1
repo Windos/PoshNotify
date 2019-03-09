@@ -2,8 +2,16 @@ if($IsMacOS -and !(Get-Module MacNotify -list)) {
     Install-Module MacNotify
 }
 
+if($IsMacOS -and (Get-Module MacNotify -list)) {
+    Update-Module MacNotify
+}
+
 if($IsLinux -and !(Get-Module PSNotifySend -list)) {
     Install-Module PSNotifySend
+}
+
+if($IsLinux -and (Get-Module PSNotifySend -list)) {
+    Update-Module PSNotifySend
 }
 
 #Get public and private function definition files.

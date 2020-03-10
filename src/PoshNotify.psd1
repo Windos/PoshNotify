@@ -101,6 +101,7 @@ PrivateData = @{
         ReleaseNotes = '# 0.1.3
 
 * Fix: AppId not being generated on PowerShell 7
+* Meta: Pipeline images set to latest
 
 # 0.1.2
 

@@ -12,20 +12,20 @@ trigger:
 jobs:
 - job: macOS
   pool:
-    vmImage: 'macOS-10.13'
+    vmImage: 'macOS-latest'
   steps:
   - template: azure-template.yml # Template reference
 
 - job: Windows
   pool:
-    vmImage: 'VS2017-Win2016'
+    vmImage: 'windows-latest'
   steps:
   - template: azure-template.yml # Template reference
 
 - job: Linux
   condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
   pool:
-    vmImage: 'Ubuntu-16.04'
+    vmImage: 'ubuntu-latest'
   steps:
   - template: azure-template.yml # Template reference
 
@@ -33,7 +33,7 @@ jobs:
   displayName: 'Linux (/w Coverage)'
   condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
   pool:
-    vmImage: 'Ubuntu-16.04'
+    vmImage: 'ubuntu-latest'
   steps:
   - task: PowerShell@2
     displayName: 'Run tests & coverage'
@@ -59,7 +59,7 @@ jobs:
 - job: Publish
   condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
   pool:
-    vmImage: 'VS2017-Win2016'
+    vmImage: 'windows-latest'
   steps:
   - task: PowerShell@2
     displayName: 'Run publish task'

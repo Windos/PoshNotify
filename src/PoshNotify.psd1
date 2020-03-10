@@ -12,7 +12,7 @@
 RootModule = './PoshNotify.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1.2'
+ModuleVersion = '0.1.3'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Desktop', 'Core')
@@ -98,7 +98,11 @@ PrivateData = @{
         IconUri = 'https://raw.githubusercontent.com/Windos/PoshNotify/master/media/PoshNotify.png'
 
         # ReleaseNotes of this module
-        ReleaseNotes = '# 0.1.2
+        ReleaseNotes = '# 0.1.3
+
+* Fix: AppId not being generated on PowerShell 7
+
+# 0.1.2
 
 * Added icon to metadata (for the Gallery)
 * Included link to online version of help
